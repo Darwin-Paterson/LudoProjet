@@ -1,0 +1,16 @@
+# Logs serveur / applicatifs
+error_log
+**/error_log
+api/error_log
+*.log
+
+# Avatars générés par les utilisateurs (garder default.png s'il existe)
+assets/avatars/user_*.jpg
+assets/avatars/user_*.jpeg
+assets/avatars/user_*.png
+
+# Outils / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
