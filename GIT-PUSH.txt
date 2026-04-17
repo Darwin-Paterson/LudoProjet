@@ -1,0 +1,29 @@
+Instructions pour pousser sur GitHub (à faire une fois que le dépôt existe sur GitHub)
+====================================================================================
+
+1) Sur https://github.com : New repository
+   - Nom : par exemple LudoProjet
+   - NE coche PAS "Add a README" si tu pousses déjà ce dossier avec du contenu
+   - Crée le dépôt vide
+
+2) Dans PowerShell, à la racine du projet, exécute (remplace TON_IDENTIFIANT par ton pseudo GitHub) :
+
+   powershell -ExecutionPolicy Bypass -File .\scripts\set-remote-and-push.ps1 -GitHubUser "TON_IDENTIFIANT" -Repo "LudoProjet"
+
+3) Pousse la branche main :
+
+   git push -u origin main
+
+4) Si Git demande un mot de passe :
+   - Depuis 2021, GitHub n'accepte plus le mot de passe du compte pour HTTPS
+   - Crée un "Personal Access Token" : https://github.com/settings/tokens
+   - Quand Git demande le mot de passe, colle le token à la place
+
+Alternative sans script (même résultat) :
+
+   git remote add origin https://github.com/TON_IDENTIFIANT/LudoProjet.git
+   git push -u origin main
+
+Pour vérifier le remote :
+
+   git remote -v
