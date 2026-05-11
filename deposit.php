@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_deposit'])) {
     $trx_id = $_POST['trx_id'];
 
     if ($amount < 10) {
-        $msg = "Le montant minimum du dépôt est de ৳10";
+        $msg = "Le montant minimum du dépôt est de FCFA 10";
         $msg_type = "red";
     } elseif (empty($trx_id) || empty($sender_number)) {
         $msg = "Tous les champs sont obligatoires !";
@@ -60,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_deposit'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dépôt d'argent - Ludo Pro</title>
     
@@ -139,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_deposit'])) {
                 <li>Sélectionnez la méthode de paiement (bKash/Nagad/Rocket).</li>
                 <li>Envoyez l'argent avec l'option <span class="text-white font-bold">"Send Money"</span>.</li>
                 <li>Copiez l'ID de transaction puis collez-le ci-dessous.</li>
-                <li>Le montant minimum du dépôt est de <span class="text-white font-bold">৳10</span>.</li>
+                <li>Le montant minimum du dépôt est de <span class="text-white font-bold">FCFA 10</span>.</li>
             </ul>
         </div>
 
@@ -199,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_deposit'])) {
                 <div>
                     <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1 ml-1">Montant</label>
                     <div class="relative mt-1 group">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold group-focus-within:text-blue-500 transition">৳</span>
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold group-focus-within:text-blue-500 transition">FCFA </span>
                         <input type="number" name="amount" class="w-full py-3.5 pl-10 pr-4 rounded-xl text-sm font-bold placeholder-slate-600" placeholder="Saisir le montant (Min 10)" required min="10">
                     </div>
                 </div>

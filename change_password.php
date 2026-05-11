@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_pass'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Changer le mot de passe - Ludo Pro</title>
     

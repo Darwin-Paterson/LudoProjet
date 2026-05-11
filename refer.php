@@ -51,13 +51,14 @@ try {
     error_log($e->getMessage());
 }
 
-$share_text = "Rejoins Ludo Pro avec mon code *" . $user['referral_code'] . "* et reçois ৳50 de bonus ! Joue et gagne gros ! Lien : https://yoursite.com/register.php?ref=" . $user['referral_code'];
+$share_text = "Rejoins Ludo Pro avec mon code *" . $user['referral_code'] . "* et reçois FCFA 50 de bonus ! Joue et gagne gros ! Lien : https://yoursite.com/register.php?ref=" . $user['referral_code'];
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Parrainage - Ludo Pro</title>
     
@@ -105,8 +106,8 @@ $share_text = "Rejoins Ludo Pro avec mon code *" . $user['referral_code'] . "* e
                 <div class="absolute inset-0 bg-blue-500 blur-2xl opacity-30 animate-pulse"></div>
                 <img src="https://cdn-icons-png.flaticon.com/512/8695/8695029.png" class="w-32 h-32 relative z-10 mx-auto drop-shadow-xl" alt="Gift">
             </div>
-            <h1 class="text-3xl font-black text-white">Gagnez ৳50 !</h1>
-            <p class="text-sm text-slate-400 max-w-[80%] mx-auto">Invitez vos amis et recevez ৳50 dès qu'ils s'inscrivent et déposent.</p>
+            <h1 class="text-3xl font-black text-white">Gagnez FCFA 50 !</h1>
+            <p class="text-sm text-slate-400 max-w-[80%] mx-auto">Invitez vos amis et recevez FCFA 50 dès qu'ils s'inscrivent et déposent.</p>
         </div>
 
         <div class="glass-card p-5 rounded-2xl border border-blue-500/30 relative overflow-hidden">
@@ -153,7 +154,7 @@ $share_text = "Rejoins Ludo Pro avec mon code *" . $user['referral_code'] . "* e
                     <i class="fas fa-wallet"></i>
                 </div>
                 <div>
-                    <h4 class="text-xl font-black text-white">৳<?= $total_earnings ?></h4>
+                    <h4 class="text-xl font-black text-white">FCFA <?= $total_earnings ?></h4>
                     <p class="text-[10px] text-slate-400 uppercase font-bold">Total gagné</p>
                 </div>
             </div>
@@ -174,7 +175,7 @@ $share_text = "Rejoins Ludo Pro avec mon code *" . $user['referral_code'] . "* e
                                 <p class="text-[10px] text-slate-500"><?= date('d M, Y', strtotime($ref['created_at'])) ?></p>
                             </div>
                         </div>
-                        <span class="text-xs font-bold text-green-400">+৳50</span>
+                        <span class="text-xs font-bold text-green-400">+FCFA 50</span>
                     </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

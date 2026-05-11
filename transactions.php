@@ -28,6 +28,7 @@ try {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Historique des transactions - Ludo Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -84,7 +85,7 @@ try {
 
                     <div class="text-right">
                         <p class="text-lg font-black <?= $row['type'] == 'deposit' ? 'text-green-400' : 'text-red-400' ?>">
-                            <?= $row['type'] == 'deposit' ? '+' : '-' ?>৳<?= number_format($row['amount'], 2) ?>
+                            <?= $row['type'] == 'deposit' ? '+' : '-' ?>FCFA <?= number_format($row['amount'], 2) ?>
                         </p>
                         <span class="text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter 
                             <?= $row['status'] == 'Approved' || $row['status'] == 'Success' ? 'status-approved' : ($row['status'] == 'Rejected' ? 'status-rejected' : 'status-pending') ?>">

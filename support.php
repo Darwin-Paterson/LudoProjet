@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_ticket'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ludo Pro - Support</title>
     
@@ -185,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_ticket'])) {
                     </div>
                     <div class="faq-content bg-slate-900/30">
                         <p class="p-4 pt-0 text-[11px] text-slate-400 leading-relaxed">
-                            Le montant minimum de retrait est de ৳100. Les retraits sont traités sous 10 à 30 minutes pendant les heures de service.
+                            Le montant minimum de retrait est de FCFA 100. Les retraits sont traités sous 10 à 30 minutes pendant les heures de service.
                         </p>
                     </div>
                 </div>

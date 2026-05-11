@@ -47,6 +47,7 @@ $my_joined = $joined_stmt->fetchAll(PDO::FETCH_COLUMN);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tournois - Ludo Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>

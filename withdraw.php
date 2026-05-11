@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_withdraw'])) {
     $account_number = $_POST['account_number'];
 
     if ($amount < 50) {
-        $msg = "Le montant minimum du retrait est de ৳50";
+        $msg = "Le montant minimum du retrait est de FCFA 50";
         $msg_type = "red";
     } elseif ($amount > $current_balance) {
         $msg = "Solde insuffisant !";
@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_withdraw'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Retrait - Ludo Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -78,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_withdraw'])) {
 
         <div class="glass-card rounded-[2rem] p-6 text-center border-t-4 border-red-500">
             <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Solde retirable</p>
-            <h1 class="text-4xl font-black text-white mt-1">৳<?= number_format($current_balance, 2) ?></h1>
+            <h1 class="text-4xl font-black text-white mt-1">FCFA <?= number_format($current_balance, 2) ?></h1>
         </div>
 
         <?php if($msg): ?>
@@ -125,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_withdraw'])) {
                 <div>
                     <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">Montant du retrait</label>
                     <div class="relative mt-1">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">৳</span>
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">FCFA </span>
                         <input type="number" name="amount" class="w-full p-4 pl-8 rounded-2xl" placeholder="Min 50" required min="50">
                     </div>
                 </div>

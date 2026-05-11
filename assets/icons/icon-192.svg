@@ -1,0 +1,19 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'>
+  <defs>
+    <linearGradient id='bg' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' style='stop-color:#1e1b4b'/>
+      <stop offset='100%' style='stop-color:#020617'/>
+    </linearGradient>
+    <linearGradient id='die' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' style='stop-color:#f59e0b'/>
+      <stop offset='100%' style='stop-color:#d97706'/>
+    </linearGradient>
+  </defs>
+  <rect width='192' height='192' rx='42.24' fill='url(#bg)'/>
+  <rect x='28.799999999999997' y='28.799999999999997' width='134.39999999999998' height='134.39999999999998' rx='23.04' fill='url(#die)'/>
+  <circle cx='63.36' cy='63.36' r='17.28' fill='#1e1b4b'/>
+  <circle cx='128.64000000000001' cy='63.36' r='17.28' fill='#1e1b4b'/>
+  <circle cx='96'  cy='96'  r='17.28' fill='#1e1b4b'/>
+  <circle cx='63.36' cy='128.64000000000001' r='17.28' fill='#1e1b4b'/>
+  <circle cx='128.64000000000001' cy='128.64000000000001' r='17.28' fill='#1e1b4b'/>
+</svg>

@@ -59,7 +59,8 @@ $sliders = $pdo->query("SELECT * FROM sliders ORDER BY id DESC")->fetchAll();
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramètres</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">

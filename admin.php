@@ -7,15 +7,14 @@ require 'config/db.php';
 if (isset($_POST['login'])) {
     $user = trim($_POST['user']);
     $pass = $_POST['pass'];
-    
+
     $stmt = $pdo->prepare("SELECT * FROM admin WHERE username = ?");
     $stmt->execute([$user]);
     $admin = $stmt->fetch();
 
     if ($admin) {
-        // Vérification du mot de passe
         if (password_verify($pass, $admin['password']) || $pass === $admin['password']) {
-            session_regenerate_id(true); // Sécurité : régénérer l'ID de session
+            session_regenerate_id(true);
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_id'] = $admin['id'];
             header("Location: admin.php");
@@ -39,7 +38,8 @@ if (!isset($_SESSION['admin_logged_in'])) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion Admin - Ludo Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
@@ -177,7 +177,7 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
             <h2 class="text-xl font-bold text-white tracking-wide">Ludo<span class="text-blue-500">Pro</span></h2>
         </div>
         <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
-            <p class="px-4 text-[10px] font-bold text-slate-500 uppercase mb-2 mt-2">Main</p>
+            <p class="px-4 text-[10px] font-bold text-slate-500 uppercase mb-2 mt-2">Principal</p>
             <a href="admin.php" class="sidebar-link flex items-center gap-3 px-4 py-3 text-slate-300 rounded-xl font-medium bg-blue-600/10 text-blue-400 border border-blue-600/20">
                 <i class="fas fa-home w-5"></i> Tableau de bord
             </a>
@@ -231,7 +231,7 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
                 </div>
                 <div class="glass p-5 rounded-2xl flex flex-col justify-between h-28 border border-green-500/30 bg-green-500/5">
                     <p class="text-xs text-green-400 uppercase font-bold tracking-wider">Avoirs utilisateurs</p>
-                    <h3 class="text-3xl font-black text-white">৳<?= number_format($total_balance) ?></h3>
+                    <h3 class="text-3xl font-black text-white"><?= number_format($total_balance) ?> FCFA</h3>
                 </div>
                 <div class="glass p-5 rounded-2xl flex flex-col justify-between h-28 border border-blue-500/30">
                     <p class="text-xs text-blue-400 uppercase font-bold tracking-wider">Dépôts en attente</p>
@@ -246,11 +246,11 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
             <!-- TOURNAMENTS SECTION (STYLED) -->
             <div id="tournaments" class="space-y-4">
                 <div class="flex items-center justify-between">
-                    <h3 class="font-bold text-white text-lg"><i class="fas fa-trophy text-yellow-500 mr-2"></i> Tournaments</h3>
+                    <h3 class="font-bold text-white text-lg"><i class="fas fa-trophy text-yellow-500 mr-2"></i> Tournois</h3>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <?php if(count($tournaments) == 0) echo "<p class='text-slate-500'>No matches created yet.</p>"; ?>
+                    <?php if(count($tournaments) == 0) echo "<p class='text-slate-500'>Aucun match créé pour l'instant.</p>"; ?>
                     <?php foreach($tournaments as $t): ?>
                     <div class="glass rounded-xl overflow-hidden border border-slate-700 group hover:border-blue-500/50 transition relative">
                         <!-- Status Badge -->
@@ -266,23 +266,23 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
                             
                             <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-lg border border-slate-700 mb-4">
                                 <div class="text-center">
-                                    <p class="text-[10px] text-slate-500 uppercase">Entry</p>
-                                    <p class="text-sm font-bold text-white">৳<?= $t['entry_fee'] ?></p>
+                                    <p class="text-[10px] text-slate-500 uppercase">Mise</p>
+                                    <p class="text-sm font-bold text-white"><?= $t['entry_fee'] ?> FCFA</p>
                                 </div>
                                 <div class="w-px h-8 bg-slate-700"></div>
                                 <div class="text-center">
-                                    <p class="text-[10px] text-slate-500 uppercase">Prize</p>
-                                    <p class="text-sm font-bold text-green-400">৳<?= $t['prize_pool'] ?></p>
+                                    <p class="text-[10px] text-slate-500 uppercase">Gain</p>
+                                    <p class="text-sm font-bold text-green-400"><?= $t['prize_pool'] ?> FCFA</p>
                                 </div>
                                 <div class="w-px h-8 bg-slate-700"></div>
                                 <div class="text-center">
-                                    <p class="text-[10px] text-slate-500 uppercase">Players</p>
+                                    <p class="text-[10px] text-slate-500 uppercase">Joueurs</p>
                                     <p class="text-sm font-bold text-blue-400"><?= $t['max_players'] ?></p>
                                 </div>
                             </div>
 
-                            <a href="?del_tour=<?= $t['id'] ?>" onclick="return confirm('Are you sure you want to delete this match?')" class="w-full block text-center bg-red-500/10 hover:bg-red-500 hover:text-white text-red-500 py-2 rounded-lg text-xs font-bold transition">
-                                <i class="fas fa-trash mr-1"></i> DELETE MATCH
+                            <a href="?del_tour=<?= $t['id'] ?>" onclick="return confirm('Supprimer ce match ?')" class="w-full block text-center bg-red-500/10 hover:bg-red-500 hover:text-white text-red-500 py-2 rounded-lg text-xs font-bold transition">
+                                <i class="fas fa-trash mr-1"></i> SUPPRIMER LE MATCH
                             </a>
                         </div>
                     </div>
@@ -293,17 +293,17 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
             <!-- USERS SECTION -->
             <div id="users" class="glass rounded-xl p-5 border border-slate-700">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-5 gap-3">
-                    <h3 class="font-bold text-white text-lg"><i class="fas fa-users text-purple-500 mr-2"></i> Users List</h3>
+                    <h3 class="font-bold text-white text-lg"><i class="fas fa-users text-purple-500 mr-2"></i> Liste des utilisateurs</h3>
                     <div class="relative w-full md:w-64">
                         <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                        <input type="text" id="searchUser" onkeyup="filterUsers()" placeholder="Search user..." class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white outline-none focus:border-blue-500 transition">
+                        <input type="text" id="searchUser" onkeyup="filterUsers()" placeholder="Rechercher un utilisateur..." class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white outline-none focus:border-blue-500 transition">
                     </div>
                 </div>
                 
                 <div class="overflow-x-auto max-h-[500px]">
                     <table class="w-full text-left text-slate-400">
                         <thead class="bg-slate-800 text-xs uppercase sticky top-0">
-                            <tr><th class="p-3">Username</th><th class="p-3">Phone</th><th class="p-3">Balance</th><th class="p-3">Status</th><th class="p-3 text-right">Action</th></tr>
+                            <tr><th class="p-3">Utilisateur</th><th class="p-3">Téléphone</th><th class="p-3">Solde</th><th class="p-3">Statut</th><th class="p-3 text-right">Action</th></tr>
                         </thead>
                         <tbody id="userTableBody" class="divide-y divide-slate-700">
                             <?php foreach($users as $u): ?>
@@ -311,12 +311,12 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
                                 <td class="p-3 text-white font-bold username"><?= $u['username'] ?></td>
                                 <td class="p-3 text-xs font-mono text-slate-300 phone"><?= $u['phone'] ?? 'N/A' ?></td>
                                 <td class="p-3">
-                                    <span class="text-green-400 font-bold">৳<?= $u['balance'] ?></span>
-                                    <span class="text-[10px] text-slate-500 block">Win: ৳<?= $u['win_balance'] ?></span>
+                                    <span class="text-green-400 font-bold"><?= $u['balance'] ?> FCFA</span>
+                                    <span class="text-[10px] text-slate-500 block">Gains : <?= $u['win_balance'] ?> FCFA</span>
                                 </td>
                                 <td class="p-3"><span class="text-[10px] px-2 py-0.5 rounded uppercase font-bold <?= $u['status']=='banned'?'bg-red-500 text-white':'bg-emerald-500/10 text-emerald-500' ?>"><?= $u['status'] ?></span></td>
                                 <td class="p-3 text-right">
-                                    <button onclick='openUserModal(<?= json_encode($u) ?>)' class="bg-slate-700 hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">Edit</button>
+                                    <button onclick='openUserModal(<?= json_encode($u) ?>)' class="bg-slate-700 hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">Modifier</button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -329,8 +329,8 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Deposits -->
                 <div id="deposits" class="glass rounded-xl p-5 border border-slate-700 h-96 overflow-y-auto">
-                    <h3 class="font-bold text-white mb-4 sticky top-0 bg-[#151e2e] py-2 border-b border-slate-700 z-10"><i class="fas fa-arrow-down text-emerald-500 mr-2"></i> Pending Deposits</h3>
-                    <?php if(empty($deposits)) echo "<div class='text-center text-slate-500 py-10'><i class='fas fa-check-circle text-2xl mb-2'></i><p>All clear!</p></div>"; ?>
+                    <h3 class="font-bold text-white mb-4 sticky top-0 bg-[#151e2e] py-2 border-b border-slate-700 z-10"><i class="fas fa-arrow-down text-emerald-500 mr-2"></i> Dépôts en attente</h3>
+                    <?php if(empty($deposits)) echo "<div class='text-center text-slate-500 py-10'><i class='fas fa-check-circle text-2xl mb-2'></i><p>Tout est traité !</p></div>"; ?>
                     <?php foreach($deposits as $d): ?>
                     <div class="flex justify-between items-center bg-slate-800/50 p-4 rounded-xl mb-3 border border-slate-700 hover:border-emerald-500/30 transition">
                         <div>
@@ -338,10 +338,10 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
                             <p class="text-[10px] text-slate-400 mt-1 font-mono bg-slate-900 px-1 rounded inline-block">Trx: <?= $d['transaction_id'] ?></p>
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-lg text-emerald-400">৳<?= $d['amount'] ?></p>
+                            <p class="font-bold text-lg text-emerald-400"><?= $d['amount'] ?> FCFA</p>
                             <div class="flex gap-2 mt-2">
-                                <a href="?action=dep_status&status=Approved&id=<?= $d['id'] ?>&amount=<?= $d['amount'] ?>&uid=<?= $d['user_id'] ?>" onclick="return confirm('Approve Deposit?')" class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500 hover:text-white flex items-center justify-center transition"><i class="fas fa-check"></i></a>
-                                <a href="?action=dep_status&status=Rejected&id=<?= $d['id'] ?>&amount=0&uid=0" onclick="return confirm('Reject Deposit?')" class="w-8 h-8 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition"><i class="fas fa-times"></i></a>
+                                <a href="?action=dep_status&status=Approved&id=<?= $d['id'] ?>&amount=<?= $d['amount'] ?>&uid=<?= $d['user_id'] ?>" onclick="return confirm('Approuver ce dépôt ?')" class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-500 hover:bg-emerald-500 hover:text-white flex items-center justify-center transition"><i class="fas fa-check"></i></a>
+                                <a href="?action=dep_status&status=Rejected&id=<?= $d['id'] ?>&amount=0&uid=0" onclick="return confirm('Rejeter ce dépôt ?')" class="w-8 h-8 rounded-lg bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition"><i class="fas fa-times"></i></a>
                             </div>
                         </div>
                     </div>
@@ -350,8 +350,8 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
 
                 <!-- Withdraws -->
                 <div id="withdraws" class="glass rounded-xl p-5 border border-slate-700 h-96 overflow-y-auto">
-                    <h3 class="font-bold text-white mb-4 sticky top-0 bg-[#151e2e] py-2 border-b border-slate-700 z-10"><i class="fas fa-arrow-up text-red-500 mr-2"></i> Pending Withdrawals</h3>
-                    <?php if(empty($withdraws)) echo "<div class='text-center text-slate-500 py-10'><i class='fas fa-check-circle text-2xl mb-2'></i><p>All clear!</p></div>"; ?>
+                    <h3 class="font-bold text-white mb-4 sticky top-0 bg-[#151e2e] py-2 border-b border-slate-700 z-10"><i class="fas fa-arrow-up text-red-500 mr-2"></i> Retraits en attente</h3>
+                    <?php if(empty($withdraws)) echo "<div class='text-center text-slate-500 py-10'><i class='fas fa-check-circle text-2xl mb-2'></i><p>Tout est traité !</p></div>"; ?>
                     <?php foreach($withdraws as $w): ?>
                     <div class="flex justify-between items-center bg-slate-800/50 p-4 rounded-xl mb-3 border border-slate-700 hover:border-red-500/30 transition">
                         <div>
@@ -359,10 +359,10 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
                             <p class="text-[10px] text-slate-400 mt-1 font-mono"><?= $w['account_number'] ?></p>
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-lg text-white">৳<?= $w['amount'] ?></p>
+                            <p class="font-bold text-lg text-white"><?= $w['amount'] ?> FCFA</p>
                             <div class="flex gap-2 mt-2">
-                                <a href="?action=withdraw_status&status=Approved&id=<?= $w['id'] ?>" onclick="return confirm('Mark as Paid?')" class="px-3 py-1.5 rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white text-[10px] font-bold transition">PAY</a>
-                                <a href="?action=withdraw_status&status=Rejected&id=<?= $w['id'] ?>" onclick="return confirm('Refund Money?')" class="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white text-[10px] font-bold transition">REFUND</a>
+                                <a href="?action=withdraw_status&status=Approved&id=<?= $w['id'] ?>" onclick="return confirm('Marquer comme payé ?')" class="px-3 py-1.5 rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white text-[10px] font-bold transition">PAYER</a>
+                                <a href="?action=withdraw_status&status=Rejected&id=<?= $w['id'] ?>" onclick="return confirm('Rembourser et rejeter ?')" class="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white text-[10px] font-bold transition">REMBOURSER</a>
                             </div>
                         </div>
                     </div>
@@ -376,36 +376,36 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
     <!-- ADD TOURNAMENT MODAL -->
     <div id="addTourModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
         <div class="bg-slate-800 p-6 rounded-2xl w-full max-w-md border border-slate-700 shadow-2xl transform transition-all scale-100">
-            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2"><i class="fas fa-gamepad text-blue-500"></i> Create Match</h3>
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2"><i class="fas fa-gamepad text-blue-500"></i> Créer un match</h3>
             <form method="POST" class="space-y-4">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Title</label>
-                    <input type="text" name="title" placeholder="e.g. T-20 Big Win" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 outline-none focus:border-blue-500 mt-1" required>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Titre</label>
+                    <input type="text" name="title" placeholder="ex. Grand Tournoi" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 outline-none focus:border-blue-500 mt-1" required>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase">Entry Fee</label>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Mise d'entrée</label>
                         <input type="number" name="fee" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 outline-none mt-1" required>
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase">Prize</label>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Gain</label>
                         <input type="number" name="prize" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 outline-none mt-1" required>
                     </div>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Start Time</label>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Heure de début</label>
                     <input type="datetime-local" name="time" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 outline-none mt-1" required>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Players</label>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Joueurs</label>
                     <select name="players" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 outline-none mt-1">
-                        <option value="2">2 Players</option>
-                        <option value="4">4 Players</option>
+                        <option value="2">2 Joueurs</option>
+                        <option value="4">4 Joueurs</option>
                     </select>
                 </div>
                 <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="document.getElementById('addTourModal').classList.add('hidden')" class="flex-1 bg-slate-700 hover:bg-slate-600 py-3 rounded-xl text-white font-bold transition">Cancel</button>
-                    <button name="add_tournament" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 py-3 rounded-xl text-white font-bold transition shadow-lg">Create Match</button>
+                    <button type="button" onclick="document.getElementById('addTourModal').classList.add('hidden')" class="flex-1 bg-slate-700 hover:bg-slate-600 py-3 rounded-xl text-white font-bold transition">Annuler</button>
+                    <button name="add_tournament" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 py-3 rounded-xl text-white font-bold transition shadow-lg">Créer le match</button>
                 </div>
             </form>
         </div>
@@ -414,34 +414,34 @@ $deposits = $pdo->query("SELECT d.*, u.username FROM deposits d JOIN users u ON 
     <!-- EDIT USER MODAL -->
     <div id="userModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
         <div class="bg-slate-800 p-6 rounded-2xl w-full max-w-sm border border-slate-700 shadow-2xl">
-            <h3 class="text-lg font-bold text-white mb-1">Edit User</h3>
+            <h3 class="text-lg font-bold text-white mb-1">Modifier l'utilisateur</h3>
             <p id="modalUserName" class="text-blue-400 text-sm mb-4 font-mono"></p>
             <form method="POST" class="space-y-4">
                 <input type="hidden" name="user_id" id="modalUserId">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase">Main Bal</label>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Solde principal</label>
                         <input type="number" name="balance" id="modalBalance" class="w-full bg-slate-900 p-2.5 rounded-xl text-white border border-slate-700 mt-1">
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase">Win Bal</label>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Solde gains</label>
                         <input type="number" name="win_balance" id="modalWin" class="w-full bg-slate-900 p-2.5 rounded-xl text-white border border-slate-700 mt-1">
                     </div>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Status</label>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Statut</label>
                     <select name="status" id="modalStatus" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 mt-1">
-                        <option value="active">Active</option>
-                        <option value="banned">Banned</option>
+                        <option value="active">Actif</option>
+                        <option value="banned">Banni</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">New Password (Optional)</label>
-                    <input type="text" name="new_pass" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 mt-1" placeholder="Leave empty to keep same">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Nouveau mot de passe (optionnel)</label>
+                    <input type="text" name="new_pass" class="w-full bg-slate-900 p-3 rounded-xl text-white border border-slate-700 mt-1" placeholder="Laisser vide pour conserver">
                 </div>
                 <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="document.getElementById('userModal').classList.add('hidden')" class="flex-1 bg-slate-700 hover:bg-slate-600 py-3 rounded-xl text-white font-bold transition">Close</button>
-                    <button name="update_user" class="flex-1 bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl text-white font-bold transition shadow-lg">Save Changes</button>
+                    <button type="button" onclick="document.getElementById('userModal').classList.add('hidden')" class="flex-1 bg-slate-700 hover:bg-slate-600 py-3 rounded-xl text-white font-bold transition">Fermer</button>
+                    <button name="update_user" class="flex-1 bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl text-white font-bold transition shadow-lg">Enregistrer</button>
                 </div>
             </form>
         </div>

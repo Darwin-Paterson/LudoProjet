@@ -14,3 +14,11 @@ assets/avatars/user_*.png
 Thumbs.db
 .vscode/
 .idea/
+
+# Outils internes Claude / swarm
+.claude/
+.claude-flow/
+.swarm/
+.mcp.json
+ruvector.db
+CLAUDE.md

@@ -10,6 +10,7 @@ if (isset($_SESSION['user_id'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ludo Pro - Jouez et gagnez de l'argent réel</title>
     
@@ -114,9 +115,43 @@ if (isset($_SESSION['user_id'])) {
                 <a href="register.php" class="px-8 py-4 rounded-xl bg-white text-slate-900 font-bold text-sm shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition flex items-center justify-center gap-2">
                     <i class="fas fa-gamepad"></i> JOUER MAINTENANT
                 </a>
-                <a href="#" class="px-8 py-4 rounded-xl glass-card text-white font-bold text-sm hover:bg-white/10 transition flex items-center justify-center gap-2">
-                    <i class="fab fa-android text-green-400 text-lg"></i> TÉLÉCHARGER L'APP
+                <a id="btn-dl" href="/ludo/assets/apk/ludo-royal.apk" class="px-8 py-4 rounded-xl glass-card text-white font-bold text-sm hover:bg-white/10 transition flex items-center justify-center gap-2">
+                    <i id="ico-dl" class="fab fa-android text-green-400 text-lg"></i>
+                    <span id="lbl-dl">TÉLÉCHARGER L'APP</span>
                 </a>
+                <script>
+                (function(){
+                    const ua=navigator.userAgent||'';
+                    const isIOS=/iPhone|iPad|iPod/i.test(ua);
+                    const isAnd=/Android/i.test(ua);
+                    const btn=document.getElementById('btn-dl');
+                    const ico=document.getElementById('ico-dl');
+                    const lbl=document.getElementById('lbl-dl');
+                    if(isIOS){
+                        ico.className='fab fa-apple text-white text-lg';
+                        lbl.textContent="Installer sur iPhone";
+                        btn.href='#';
+                        btn.onclick=function(e){
+                            e.preventDefault();
+                            alert('Sur iPhone :\n1. Ouvrez Safari\n2. Appuyez sur Partager ↑\n3. "Sur l\'écran d\'accueil"');
+                        };
+                    } else if(!isAnd){
+                        // Desktop: PWA install
+                        ico.className='fas fa-download text-blue-400 text-lg';
+                        lbl.textContent="Installer l'application";
+                        btn.href='#';
+                        btn.onclick=function(e){
+                            e.preventDefault();
+                            if(window._pwaPrompt){window._pwaPrompt.prompt();}
+                            else{alert('Cliquez sur l\'icône ⊕ dans la barre d\'adresse de Chrome pour installer.');}
+                        };
+                    }
+                    // Android: lien APK direct (déjà configuré)
+                    window.addEventListener('beforeinstallprompt',function(e){
+                        e.preventDefault();window._pwaPrompt=e;
+                    });
+                })();
+                </script>
             </div>
 
             <!-- Stats -->
@@ -126,7 +161,7 @@ if (isset($_SESSION['user_id'])) {
                     <p class="text-[10px] text-slate-500 uppercase tracking-widest">Joueurs</p>
                 </div>
                 <div>
-                    <h3 class="text-2xl font-bold text-white">৳5Cr+</h3>
+                    <h3 class="text-2xl font-bold text-white">FCFA 5Cr+</h3>
                     <p class="text-[10px] text-slate-500 uppercase tracking-widest">Gains</p>
                 </div>
                 <div>
@@ -164,7 +199,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center text-green-400"><i class="fas fa-check"></i></div>
                 <div>
                     <p class="text-[10px] text-slate-400 font-bold">Paiement reçu</p>
-                    <p class="text-xs font-black text-white">+ ৳500.00</p>
+                    <p class="text-xs font-black text-white">+ FCFA 500.00</p>
                 </div>
             </div>
             
@@ -173,7 +208,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-400"><i class="fas fa-trophy"></i></div>
                 <div>
                     <p class="text-[10px] text-slate-400 font-bold">Raju a gagné</p>
-                    <p class="text-xs font-black text-yellow-400">৳2,000.00</p>
+                    <p class="text-xs font-black text-yellow-400">FCFA 2,000.00</p>
                 </div>
             </div>
         </div>
@@ -282,7 +317,7 @@ if (isset($_SESSION['user_id'])) {
             
             <div class="relative z-10">
                 <h2 class="text-3xl md:text-5xl font-black text-white mb-6">PRÊT À JOUER ?</h2>
-                <p class="text-slate-300 mb-8 text-lg">Ne ratez pas les méga tournois quotidiens. Rejoignez-nous et obtenez <span class="text-yellow-400 font-bold">৳50 de bonus</span> !</p>
+                <p class="text-slate-300 mb-8 text-lg">Ne ratez pas les méga tournois quotidiens. Rejoignez-nous et obtenez <span class="text-yellow-400 font-bold">FCFA 50 de bonus</span> !</p>
                 
                 <a href="register.php" class="inline-block px-10 py-4 rounded-full bg-white text-blue-900 font-black text-lg shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:scale-105 transition transform">
                     CRÉER UN COMPTE
@@ -320,8 +355,8 @@ if (isset($_SESSION['user_id'])) {
                 <h4 class="text-white font-bold mb-4">Contact</h4>
                 <ul class="space-y-2 text-sm text-slate-400">
                     <li><i class="fas fa-envelope w-5"></i> support@ludopro.com</li>
-                    <li><i class="fab fa-whatsapp w-5"></i>+880 1330-368547</li>
-                    <li><i class="fas fa-map-marker-alt w-5"></i> Dhaka, Bangladesh</li>
+                    <li><i class="fab fa-whatsapp w-5"></i>+237 1330-368547</li>
+                    <li><i class="fas fa-map-marker-alt w-5"></i> Yaoundé, Cameroun</li>
                 </ul>
                 <div class="flex gap-4 mt-4">
                     <a href="https://t.me/appdeveloperbdandappseller" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>

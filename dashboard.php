@@ -27,6 +27,7 @@ try {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ludo Pro - Tableau de bord premium</title>
     
@@ -109,7 +110,7 @@ try {
                         <div class="z-10 w-2/3">
                             <span class="bg-white/20 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase mb-2 inline-block">Nouveau</span>
                             <h3 class="text-xl font-black text-white leading-tight mb-1">Méga tournoi</h3>
-                            <p class="text-[10px] text-indigo-100 mb-3">Participez et gagnez un prize pool de ৳50,000 !</p>
+                            <p class="text-[10px] text-indigo-100 mb-3">Participez et gagnez un prize pool de FCFA 50,000 !</p>
                             <button class="bg-white text-indigo-600 text-[10px] font-bold px-4 py-1.5 rounded-full shadow-lg">Participer</button>
                         </div>
                         <i class="fas fa-trophy text-6xl text-white/20 absolute -right-2 -bottom-4 rotate-12"></i>
@@ -122,7 +123,7 @@ try {
                         <div class="z-10 w-2/3">
                             <span class="bg-white/20 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase mb-2 inline-block">Offre</span>
                             <h3 class="text-xl font-black text-white leading-tight mb-1">Bonus de 50%</h3>
-                            <p class="text-[10px] text-rose-100 mb-3">Sur le premier dépôt supérieur à ৳500</p>
+                            <p class="text-[10px] text-rose-100 mb-3">Sur le premier dépôt supérieur à FCFA 500</p>
                             <button class="bg-white text-rose-600 text-[10px] font-bold px-4 py-1.5 rounded-full shadow-lg">Dépôt</button>
                         </div>
                         <i class="fas fa-gift text-6xl text-white/20 absolute -right-2 -bottom-4 rotate-12"></i>
@@ -135,7 +136,7 @@ try {
                         <div class="z-10 w-2/3">
                             <span class="bg-white/20 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase mb-2 inline-block">Mise à jour</span>
                             <h3 class="text-xl font-black text-white leading-tight mb-1">Parrainez et gagnez</h3>
-                            <p class="text-[10px] text-emerald-100 mb-3">Recevez ৳50 par ami invité !</p>
+                            <p class="text-[10px] text-emerald-100 mb-3">Recevez FCFA 50 par ami invité !</p>
                             <button class="bg-white text-emerald-600 text-[10px] font-bold px-4 py-1.5 rounded-full shadow-lg">Inviter</button>
                         </div>
                         <i class="fas fa-users text-6xl text-white/20 absolute -right-2 -bottom-4 rotate-12"></i>
@@ -152,7 +153,7 @@ try {
             <div class="relative z-10 flex justify-between items-start">
                 <div>
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Solde total</p>
-                    <h2 class="text-4xl font-black text-white tracking-tight">৳<?= number_format($user['balance'] + $user['win_balance'], 2) ?></h2>
+                    <h2 class="text-4xl font-black text-white tracking-tight">FCFA <?= number_format($user['balance'] + $user['win_balance'], 2) ?></h2>
                 </div>
                 <div class="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-3 rounded-xl border border-white/5">
                     <i class="fas fa-wallet text-blue-400 text-lg"></i>
@@ -182,7 +183,7 @@ try {
                         <i class="fas fa-gift"></i>
                     </div>
                     <h4 class="text-sm font-bold text-white">Parrainer et gagner</h4>
-                    <p class="text-[10px] text-slate-400 mt-0.5">Obtenez ৳50 de bonus</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">Obtenez FCFA 50 de bonus</p>
                     <i class="fas fa-chevron-right text-slate-600 absolute right-3 top-1/2 -translate-y-1/2 text-xs"></i>
                 </div>
 
@@ -245,7 +246,7 @@ try {
                         </div>
                         <div class="text-right">
                             <p class="text-xs font-bold <?= $m['result'] == 'Win' ? 'text-green-400' : 'text-red-400' ?>">
-                                <?= $m['result'] == 'Win' ? '+' : '-' ?>৳<?= number_format($m['amount']) ?>
+                                <?= $m['result'] == 'Win' ? '+' : '-' ?>FCFA <?= number_format($m['amount']) ?>
                             </p>
                             <p class="text-[9px] font-bold <?= $m['result'] == 'Win' ? 'text-green-500/50' : 'text-red-500/50' ?> uppercase tracking-wide"><?= $m['result'] ?></p>
                         </div>

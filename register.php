@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Inscription - Ludo Pro</title>
     
@@ -120,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <!-- Logo Section -->
         <div class="text-center mb-6">
             <h1 class="text-4xl font-black tracking-tighter text-white">LUDO<span class="text-blue-500">PRO</span></h1>
-            <p class="text-slate-400 text-sm font-medium mt-1">Créez un compte et obtenez un bonus de ৳20</p>
+            <p class="text-slate-400 text-sm font-medium mt-1">Créez un compte et obtenez un bonus de FCFA 20</p>
         </div>
 
         <!-- Register Card -->

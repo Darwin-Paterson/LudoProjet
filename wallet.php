@@ -31,6 +31,7 @@ try {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+<?php include __DIR__.'/config/pwa.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Portefeuille - Ludo Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -59,17 +60,17 @@ try {
         <div class="balance-card rounded-[2.5rem] p-8 relative overflow-hidden">
             <p class="text-blue-100/70 text-[10px] font-bold uppercase tracking-widest mb-1">Solde disponible</p>
             <h1 class="text-5xl font-black text-white">
-                <span class="text-2xl font-medium">৳</span><?= number_format($main_balance, 2) ?>
+                <span class="text-2xl font-medium">FCFA </span><?= number_format($main_balance, 2) ?>
             </h1>
             
             <div class="flex gap-3 mt-8">
                 <div class="flex-1 bg-black/20 rounded-2xl p-3 backdrop-blur-sm">
                     <p class="text-[9px] text-blue-100/50 uppercase font-bold">Solde dépôt</p>
-                    <p class="text-sm font-bold text-green-400">৳<?= number_format($main_balance, 2) ?></p>
+                    <p class="text-sm font-bold text-green-400">FCFA <?= number_format($main_balance, 2) ?></p>
                 </div>
                 <div class="flex-1 bg-black/20 rounded-2xl p-3 backdrop-blur-sm border border-yellow-500/20">
                     <p class="text-[9px] text-yellow-100/50 uppercase font-bold">Solde bonus</p>
-                    <p class="text-sm font-bold text-yellow-400">৳<?= number_format($bonus_balance, 2) ?></p>
+                    <p class="text-sm font-bold text-yellow-400">FCFA <?= number_format($bonus_balance, 2) ?></p>
                 </div>
             </div>
         </div>
